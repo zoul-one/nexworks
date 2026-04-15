@@ -86,7 +86,8 @@ app_license = "mit"
 # ------------
 
 # before_install = "nexworks.install.before_install"
-# after_install = "nexworks.install.after_install"
+after_install = "nexworks.setup.install"
+after_migrate = "nexworks.setup.after_migrate"
 
 # Uninstallation
 # ------------
@@ -132,13 +133,16 @@ app_license = "mit"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"Lead": {
+		"after_insert": "nexworks.nexworks.lead_management.handle_lead_after_insert"
+	},
+	"Opportunity": {
+		"before_insert": "nexworks.nexworks.lead_management.handle_opportunity_before_insert",
+		"validate": "nexworks.nexworks.lead_management.validate_opportunity_before_save",
+		"on_update": "nexworks.nexworks.lead_management.handle_opportunity_on_update"
+	}
+}
 
 # Scheduled Tasks
 # ---------------
