@@ -40,9 +40,10 @@ def handle_opportunity_before_insert(doc, method):
 		doc.detailed_client_requirement = lead.detailed_client_requirement
 
 def handle_opportunity_on_update(doc, method):
-	# Notify FC Team when moving to Under Review (FC)
+	# Notify teams only when workflow state transitions happen
 	current_state = doc.workflow_state
-	previous_state = frappe.db.get_value(doc.doctype, doc.name, "workflow_state")
+	previous_doc = doc.get_doc_before_save()
+	previous_state = previous_doc.workflow_state if previous_doc else None
 	if current_state == "Under Review (FC)" and previous_state != "Under Review (FC)":
 		notify_team(doc, "Functional Consultant", "Opportunity Under Review (FC)")
 
