@@ -56,7 +56,7 @@ def get_custom_fields():
 				"label": "Priority",
 				"fieldtype": "Select",
 				"options": "\nLow\nMedium\nHigh",
-				"insert_after": "detailed_client_need"
+				"insert_after": "detailed_client_requirement"
 			},
 			{
 				"fieldname": "expected_budget",
